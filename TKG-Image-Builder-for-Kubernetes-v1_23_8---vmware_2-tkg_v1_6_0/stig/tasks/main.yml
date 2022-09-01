@@ -1,0 +1,5 @@
+---
+# tasks file for photon3
+- include: k8s-packages.yml
+- include: photon.yml
+  tags: photon

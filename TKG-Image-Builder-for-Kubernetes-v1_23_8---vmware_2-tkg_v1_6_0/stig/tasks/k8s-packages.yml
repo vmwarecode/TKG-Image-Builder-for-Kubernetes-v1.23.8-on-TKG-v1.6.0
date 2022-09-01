@@ -1,0 +1,2 @@
+- name: install rsyslog, ethtool, grub2 and nfs-utils on host
+  command: tdnf install rsyslog ethtool grub2 nfs-utils distrib-compat -y

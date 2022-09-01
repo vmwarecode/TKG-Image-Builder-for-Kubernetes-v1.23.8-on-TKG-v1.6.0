@@ -1,0 +1,49 @@
+- name: "packages: apt update"
+  apt:
+    force_apt_get: yes
+    update_cache: yes
+    upgrade: full
+
+- name: "packages: apt install"
+  apt:
+    name: "{{ install_packages }}"
+    state: present
+    force_apt_get: yes
+
+- name: "packages: chrony"
+  package:
+    name: chrony
+    state: "{{ install_chrony | ternary('present', 'absent') }}"
+
+- name: "packages: systemd-timesyncd"
+  service:
+    name: systemd-timesyncd
+    enabled: yes
+  when:
+    not install_chrony
+
+- name: "packages: clamav"
+  package:
+    name: 
+    - clamav 
+    - clamav-daemon
+    state: present
+  when:
+    install_clamav | bool
+
+- name: "packages: clamav: private mirror"
+  lineinfile:
+    path: /etc/clamav/freshclam.conf
+    line: "PrivateMirror {{ item }}"
+  with_items: "{{ clamav_database_mirrors }}"
+  when: 
+  - install_clamav | bool
+  - clamav_database_mirrors is defined and (clamav_database_mirrors | length>0)
+
+- name: "packages: apt remove"
+  apt:
+    name: "{{ remove_packages }}"
+    state: absent
+    force_apt_get: yes
+    purge: yes
+    autoclean: yes

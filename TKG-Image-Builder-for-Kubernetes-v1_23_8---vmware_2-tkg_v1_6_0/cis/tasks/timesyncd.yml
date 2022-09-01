@@ -1,0 +1,23 @@
+- name: "timesyncd: configure NTP"
+  lineinfile:
+    dest: /etc/systemd/timesyncd.conf
+    regex: "^[#]?NTP="
+    line: "NTP=0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org"
+  when:
+    install_chrony: false
+
+- name: "timesyncd: configure FallbackNTP"
+  lineinfile:
+    dest: /etc/systemd/timesyncd.conf
+    regex: "^[#]?FallbackNTP="
+    line: "FallbackNTP=ntp.ubuntu.com"
+  when:
+    install_chrony: false
+
+- name: "timesyncd: configure RootDistanceMax"
+  lineinfile:
+    dest: /etc/systemd/timesyncd.conf
+    regex: "^[#]?RootDistanceMax="
+    line: "RootDistanceMax=1"
+  when:
+    install_chrony: false

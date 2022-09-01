@@ -1,0 +1,26 @@
+- name: restart auditd
+  command: service auditd restart
+  args:
+    warn: no
+
+- name: augenrules load
+  command: augenrules --load
+  notify:
+  - restart auditd
+  
+- name: restart rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+
+- name: update-grub
+  command: update-grub 
+  notify:
+  - grub.cfg permission
+
+- name: grub.cfg permission
+  file:
+    path: /boot/grub/grub.cfg
+    group: root
+    owner: root
+    mode: 0400
