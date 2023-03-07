@@ -31,8 +31,6 @@ package:
     installed: true
   socat:
     installed: true
-  sysstat:
-    installed: true
   yum-utils:
     installed: true
 service:
@@ -57,9 +55,6 @@ service:
   kubelet:
     enabled: true
     running: false
-  sysstat:
-    enabled: true
-    running: true
 command:
   /opt/cni/bin/host-device 2>&1 | awk -F' ' '{print substr($4,2); }':
     exit-status: 0

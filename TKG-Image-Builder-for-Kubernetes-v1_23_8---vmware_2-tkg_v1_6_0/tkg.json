@@ -1,6 +1,6 @@
 {
   "build_version": "{{user `build_name`}}-kube-v1.23.8",
-  "pause_image": "http://<IP>:<PORT>/files/kubernetes/v1.23.8+vmware.2/bin/linux/amd64/pause.tar",
+  "pause_image": "projects.registry.vmware.com/tkg/pause:3.6",
   "containerd_sha256": "48f4327570dd7543464a28893160ab3bc9719ed2553f0a529a884b40f6dafd29",
   "containerd_url": "http://<IP>:<PORT>/files/containerd/cri-containerd-v1.6.6+vmware.2.linux-amd64.tar",
   "containerd_version": "v1.6.6+vmware.2",
